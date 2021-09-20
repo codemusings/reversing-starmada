@@ -1,18 +1,3 @@
-executable('zpipe', 'zpipe.c', dependencies: [dependency('zlib')])
-executable('zfs_fileutil',
-    sources: [
-        'zfs_fileutil.c',
-        'zfs_free.c',
-        'zfs_read.c'
-    ],
-    dependencies: [
-        dependency('gmp'),
-        dependency('nettle'),
-        dependency('hogweed'),
-        dependency('zlib')
-    ]
-)
-
 executable('sod_dirutil', sources: ['dirutil.c', 'sod.c', 'sod_read.c'])
 executable('sod_fileutil', sources: ['fileutil.c', 'sod.c', 'sod_free.c', 'sod_print.c', 'sod_read.c'])
 executable('sod_nodeinspector', sources: ['nodeinspector.c', 'sod.c', 'sod_free.c', 'sod_read.c'])
