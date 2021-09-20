@@ -1,0 +1,238 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>body{margin-left:0;margin-right:0;margin-top:0}#bN015htcoyT__google-cache-hdr{background:#f5f5f5;font:13px arial,sans-serif;text-align:left;color:#202020;border:0;margin:0;border-bottom:1px solid #cecece;line-height:16px;padding:16px 28px 24px 28px}#bN015htcoyT__google-cache-hdr *{display:inline;font:inherit;text-align:inherit;color:inherit;line-height:inherit;background:none;border:0;margin:0;padding:0;letter-spacing:0}#bN015htcoyT__google-cache-hdr a{text-decoration:none;color:#1a0dab}#bN015htcoyT__google-cache-hdr a:hover{text-decoration:underline}#bN015htcoyT__google-cache-hdr a:visited{color:#609}#bN015htcoyT__google-cache-hdr div{display:block;margin-top:4px}#bN015htcoyT__google-cache-hdr b{font-weight:bold;display:inline-block;direction:ltr}</style></head><body vlink="blue" link="blue" bgcolor="#ffffff"><div id="bN015htcoyT__google-cache-hdr"><div><span>Dies ist die HTML-Version der Datei <a href="http://armadafiles.com/files/armada-2/official-releases/other/storm3d-object-definition-sod-file-format-18/summary/download">http://armadafiles.com/files/armada-2/official-releases/other/storm3d-object-definition-sod-file-format-18/summary/download</a>. Google erzeugt beim Crawlen des Web automatisch HTML-Versionen von Dokumenten.</span></div><span style="display:inline-block;margin-top:8px;color:#717171"><span>Tipp: Um deinen Suchbegriff schnell auf dieser Seite zu finden, drücke <b>Strg+F</b> bzw. <b>⌘-F</b> (Mac) und verwende die Suchleiste.</span></span></div><div style="position:relative;">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Dale">
+<meta name="Creator" content="Microsoft® Office Word 2007">
+<meta name="CreationDate" content="D:20090402230549">
+<meta name="ModDate" content="D:20090402230549">
+<meta name="Producer" content="Microsoft® Office Word 2007">
+<title>Storm3D Object Definition (SOD) File Format =========================================== Author: Steve Williams Storm3D Graphics </title>
+
+<table width="100%" border="0"><tbody><tr><td bgcolor="eeeeee" align="right"><font face="arial,sans-serif"><a name="1"><b>Page 1</b></a></font></td></tr></tbody></table><font size="3" face="Times"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:286;left:108"><nobr><b>Storm3D Object Definition (SOD) File Format</b></nobr></div>
+<div style="position:absolute;top:306;left:108"><nobr>===========================================</nobr></div>
+<div style="position:absolute;top:326;left:108"><nobr>Author: Steve Williams</nobr></div>
+<div style="position:absolute;top:347;left:108"><nobr>Storm3D Graphics Engine Lead.</nobr></div>
+<div style="position:absolute;top:367;left:108"><nobr>Copyright (c) Activision 2000.</nobr></div>
+<div style="position:absolute;top:407;left:108"><nobr><b>Modifications: </b>Fixed node specification error.</nobr></div>
+<div style="position:absolute;top:447;left:108"><nobr><b>Audience</b></nobr></div>
+<div style="position:absolute;top:467;left:108"><nobr>========</nobr></div>
+<div style="position:absolute;top:488;left:108"><nobr>This document is intended for use by experienced 3D tools programmers</nobr></div>
+<div style="position:absolute;top:508;left:108"><nobr>for the purposes of writing exporters, importers and conversion tools</nobr></div>
+<div style="position:absolute;top:528;left:108"><nobr>to/from the .SOD format. A good understanding of real time 3D graphics</nobr></div>
+<div style="position:absolute;top:548;left:108"><nobr>principles is assumed. The reader is expected to be familiar with</nobr></div>
+<div style="position:absolute;top:568;left:108"><nobr>real time 3D geometry concepts such as lighting, animation &amp; scene </nobr></div>
+<div style="position:absolute;top:588;left:108"><nobr>graph hierarchies.</nobr></div>
+<div style="position:absolute;top:649;left:108"><nobr><b>Introduction</b></nobr></div>
+<div style="position:absolute;top:669;left:108"><nobr>============</nobr></div>
+<div style="position:absolute;top:689;left:108"><nobr>The SOD file format is a binary file format describing the 3D directed</nobr></div>
+<div style="position:absolute;top:709;left:108"><nobr>scene graph hierarchies used by the Storm3D rendering engine. </nobr></div>
+<div style="position:absolute;top:729;left:108"><nobr>Each .SOD file describes one such hierarchy.</nobr></div>
+<div style="position:absolute;top:790;left:108"><nobr>The SOD file format has evolved through several versions. </nobr></div>
+<div style="position:absolute;top:810;left:108"><nobr>This document describes the latest format, 1.8. </nobr></div>
+<div style="position:absolute;top:830;left:108"><nobr>Documentation of previous formats is not available at this time.</nobr></div>
+<div style="position:absolute;top:890;left:108"><nobr>Datatypes used in this document</nobr></div>
+<div style="position:absolute;top:911;left:108"><nobr>===============================</nobr></div>
+<div style="position:absolute;top:931;left:108"><nobr>UINT8 unsigned 8 bit integer</nobr></div>
+<div style="position:absolute;top:951;left:108"><nobr>UINT16 unsigned 16 bit integer</nobr></div>
+<div style="position:absolute;top:971;left:108"><nobr>UINT32 unsigned 32 bit integer</nobr></div>
+<div style="position:absolute;top:991;left:108"><nobr>FLOAT floating point (4 byte) value</nobr></div>
+<div style="position:absolute;top:1011;left:108"><nobr>VECTOR2 {FLOAT u, FLOAT v}</nobr></div>
+<div style="position:absolute;top:1031;left:108"><nobr>VECTOR3 {FLOAT x, FLOAT y, FLOAT z}</nobr></div>
+<div style="position:absolute;top:1052;left:108"><nobr>MATRIX34 { VECTOR3 RIGHT, UP, FRONT, POSITION } MATRICES MUST BE ORTHOGONAL.</nobr></div>
+<div style="position:absolute;top:1072;left:108"><nobr>COLOUR { FLOAT red, FLOAT green, FLOAT blue } Component range 0.0 - 1.0</nobr></div>
+<div style="position:absolute;top:1112;left:108"><nobr>Other local datatypes are defined where appropriate.</nobr></div>
+<div style="position:absolute;top:1152;left:108"><nobr>Additional Syntax</nobr></div>
+<div style="position:absolute;top:1173;left:108"><nobr>=================</nobr></div>
+<div style="position:absolute;top:1193;left:108"><nobr>TYPE ARRAY(nentries) - A contiguous array of nentries of type TYPE</nobr></div>
+<div style="position:absolute;top:1233;left:108"><nobr>Identifiers </nobr></div>
+</span></font>
+
+<div style="position:absolute;top:1363;left:0"><hr><table width="100%" border="0"><tbody><tr><td bgcolor="eeeeee" align="right"><font face="arial,sans-serif"><a name="2"><b>Page 2</b></a></font></td></tr></tbody></table></div><font size="3" face="Times"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:1474;left:108"><nobr>===========</nobr></div>
+<div style="position:absolute;top:1514;left:108"><nobr>IDENTIFIER </nobr></div>
+<div style="position:absolute;top:1535;left:108"><nobr>{ </nobr></div>
+<div style="position:absolute;top:1555;left:108"><nobr>UINT16 strlen(string), string (8 bit ascii values) including terminating '\0' </nobr></div>
+<div style="position:absolute;top:1575;left:108"><nobr>OR</nobr></div>
+<div style="position:absolute;top:1595;left:108"><nobr>UINT16 0 - Indicates null string.</nobr></div>
+<div style="position:absolute;top:1615;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:1655;left:108"><nobr>File Structure</nobr></div>
+<div style="position:absolute;top:1676;left:108"><nobr>==============</nobr></div>
+<div style="position:absolute;top:1716;left:108"><nobr>Section 1 : File Header</nobr></div>
+<div style="position:absolute;top:1736;left:108"><nobr>Section 2 : Lighting Materials</nobr></div>
+<div style="position:absolute;top:1756;left:108"><nobr>Section 3 : Nodes - Written recursively from the root.</nobr></div>
+<div style="position:absolute;top:1776;left:108"><nobr>Section 4 : Animation Channels</nobr></div>
+<div style="position:absolute;top:1796;left:108"><nobr>Section 5 : Animation References</nobr></div>
+<div style="position:absolute;top:1837;left:108"><nobr>Section Description</nobr></div>
+<div style="position:absolute;top:1857;left:108"><nobr>===================</nobr></div>
+<div style="position:absolute;top:1917;left:108"><nobr><b>Section 1 : File Header</b></nobr></div>
+<div style="position:absolute;top:1937;left:108"><nobr>=======================</nobr></div>
+<div style="position:absolute;top:1978;left:108"><nobr>HEADER Storm3D_SW File identification header (8 bit ascii values) - no strlen or terminating '\0'.</nobr></div>
+<div style="position:absolute;top:1998;left:108"><nobr>FLOAT version Current version is 1.8, older formats are not described at this time.</nobr></div>
+<div style="position:absolute;top:2058;left:108"><nobr><b>Section 2 : Lighting Materials</b></nobr></div>
+<div style="position:absolute;top:2078;left:108"><nobr>==============================</nobr></div>
+<div style="position:absolute;top:2099;left:108"><nobr>Defines the characteristics of the vertex lighting materials defined in this .SOD file.</nobr></div>
+<div style="position:absolute;top:2139;left:108"><nobr>UINT16 count - The number of lighting materials defined in this file.</nobr></div>
+<div style="position:absolute;top:2179;left:108"><nobr>LIGHTING_MATERIAL ARRAY(count) Array of lighting materials.</nobr></div>
+<div style="position:absolute;top:2219;left:108"><nobr>LIGHTING_MATERIAL</nobr></div>
+<div style="position:absolute;top:2240;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:2260;left:108"><nobr>IDENTIFIER identifier Name of the lighting material.</nobr></div>
+<div style="position:absolute;top:2280;left:108"><nobr>COLOUR ambient Real time lighting ambient component</nobr></div>
+<div style="position:absolute;top:2300;left:108"><nobr>COLOUR diffuse Real time lighting diffue component</nobr></div>
+<div style="position:absolute;top:2320;left:108"><nobr>COLOUR specular Real time lighting specular component (only used by the phong illumination model)</nobr></div>
+<div style="position:absolute;top:2340;left:108"><nobr>FLOAT specular power Specular exponent, used to determine the 'shininess' of material using the phong</nobr></div>
+<div style="position:absolute;top:2361;left:108"><nobr>illumination model.</nobr></div>
+<div style="position:absolute;top:2381;left:108"><nobr>UINT8 lighting model (constant=0, lambert=1, phong=2)</nobr></div>
+<div style="position:absolute;top:2401;left:108"><nobr>} </nobr></div>
+</span></font>
+
+<div style="position:absolute;top:2551;left:0"><hr><table width="100%" border="0"><tbody><tr><td bgcolor="eeeeee" align="right"><font face="arial,sans-serif"><a name="3"><b>Page 3</b></a></font></td></tr></tbody></table></div><font size="3" face="Times"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:2682;left:108"><nobr><b>Section 3 : Nodes</b></nobr></div>
+<div style="position:absolute;top:2702;left:108"><nobr>=================</nobr></div>
+<div style="position:absolute;top:2743;left:108"><nobr>The nodes consist of 5 types NULL, LOD_CONTROL, SPRITE, MESH and EMITTER which together form</nobr></div>
+<div style="position:absolute;top:2763;left:108"><nobr>a scene graph which describes the object's hierarchy.</nobr></div>
+<div style="position:absolute;top:2803;left:108"><nobr>UINT16 count - The number of nodes in the hierarchy.</nobr></div>
+<div style="position:absolute;top:2843;left:108"><nobr>&lt;Update: Note node_type &amp; identifier order has been switched to correct error in initial specification.&gt;</nobr></div>
+<div style="position:absolute;top:2884;left:108"><nobr>NODE</nobr></div>
+<div style="position:absolute;top:2904;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:2924;left:108"><nobr>UINT16 node_type (0 - null, 1- mesh, 3 - sprite, 11 - LOD control node, 12 - emitter) DO NOT USE OTHER</nobr></div>
+<div style="position:absolute;top:2944;left:108"><nobr>VALUES.</nobr></div>
+<div style="position:absolute;top:2964;left:108"><nobr>IDENTIFIER identifier</nobr></div>
+<div style="position:absolute;top:2984;left:108"><nobr>IDENTIFIER parent (which will be null for root node)</nobr></div>
+<div style="position:absolute;top:3004;left:108"><nobr>MATRIX34 local transform </nobr></div>
+<div style="position:absolute;top:3025;left:108"><nobr>TYPE_SPECIFIC_DATA&lt;node_type&gt; Type specific data field as defined below.</nobr></div>
+<div style="position:absolute;top:3045;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:3105;left:108"><nobr>Null Nodes</nobr></div>
+<div style="position:absolute;top:3125;left:108"><nobr>==========</nobr></div>
+<div style="position:absolute;top:3166;left:108"><nobr>TYPE_SPECIFIC_DATA&lt;NULL&gt;</nobr></div>
+<div style="position:absolute;top:3186;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:3206;left:108"><nobr>No addtional data required.</nobr></div>
+<div style="position:absolute;top:3226;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:3266;left:108"><nobr>Null nodes are used for two purposes :</nobr></div>
+<div style="position:absolute;top:3287;left:108"><nobr>1. As 'glue' to stick the rest of the hierarchy together</nobr></div>
+<div style="position:absolute;top:3307;left:108"><nobr>2. To mark specific locations in the hierachy, for example, hardpoints.</nobr></div>
+<div style="position:absolute;top:3367;left:108"><nobr>LOD Control Nodes</nobr></div>
+<div style="position:absolute;top:3387;left:108"><nobr>=================</nobr></div>
+<div style="position:absolute;top:3428;left:108"><nobr>TYPE_SPECIFIC_DATA&lt;LOD_CONTROL&gt;</nobr></div>
+<div style="position:absolute;top:3448;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:3468;left:108"><nobr>No addtional data required.</nobr></div>
+<div style="position:absolute;top:3488;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:3528;left:108"><nobr>Storm3D uses discrete (rather than dynamic) LODs for level of detail control. Each</nobr></div>
+<div style="position:absolute;top:3549;left:108"><nobr>child of an LOD control node indicates a discrete LOD that the graphics engine may</nobr></div>
+<div style="position:absolute;top:3569;left:108"><nobr>use when rendering this object. LOD selection is based on visible on-screen area. </nobr></div>
+</span></font>
+
+<div style="position:absolute;top:3739;left:0"><hr><table width="100%" border="0"><tbody><tr><td bgcolor="eeeeee" align="right"><font face="arial,sans-serif"><a name="4"><b>Page 4</b></a></font></td></tr></tbody></table></div><font size="3" face="Times"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:3850;left:108"><nobr>Sprite Nodes</nobr></div>
+<div style="position:absolute;top:3870;left:108"><nobr>============</nobr></div>
+<div style="position:absolute;top:3911;left:108"><nobr>TYPE_SPECIFIC_DATA&lt;SPRITE_NODE&gt;</nobr></div>
+<div style="position:absolute;top:3931;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:3951;left:108"><nobr>None: The appropriate sprite node definition to use is determined from the</nobr></div>
+<div style="position:absolute;top:3971;left:108"><nobr>identifier. The sprite node definition is defined in the .spr files.</nobr></div>
+<div style="position:absolute;top:3991;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:4031;left:108"><nobr>Examples of sprite node usage include running lights in ST:Armada.</nobr></div>
+<div style="position:absolute;top:4072;left:108"><nobr>TYPE_SPECIFIC_DATA&lt;PARTICLE_EMITTER&gt;</nobr></div>
+<div style="position:absolute;top:4092;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:4112;left:108"><nobr>IDENTIFIER Emitter used by this node as defined by an @emitter description in the .spr files.</nobr></div>
+<div style="position:absolute;top:4132;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:4172;left:108"><nobr>Polygon Mesh Nodes</nobr></div>
+<div style="position:absolute;top:4192;left:108"><nobr>==================</nobr></div>
+<div style="position:absolute;top:4233;left:108"><nobr>TYPE_SPECIFIC_DATA&lt;MESH&gt;</nobr></div>
+<div style="position:absolute;top:4253;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:4273;left:108"><nobr>IDENTIFIER texture material (0 for default) - Defines the TEXTURE_MATERIAL to be used by this mesh.</nobr></div>
+<div style="position:absolute;top:4293;left:108"><nobr>IDENTIFIER texture (0 if untextured)</nobr></div>
+<div style="position:absolute;top:4313;left:108"><nobr>UINT16 nvertices : Number of vertices</nobr></div>
+<div style="position:absolute;top:4334;left:108"><nobr>UINT16 number of texture coordinates (ntexcoords)</nobr></div>
+<div style="position:absolute;top:4354;left:108"><nobr>UINT16 number of vertex lighting groups (ngroups)</nobr></div>
+<div style="position:absolute;top:4394;left:108"><nobr>VECTOR3 ARRAY vertex positions (nvertices entries)</nobr></div>
+<div style="position:absolute;top:4414;left:108"><nobr>VECTOR2 ARRAY texture coordinates (ntexcoords entries)</nobr></div>
+<div style="position:absolute;top:4454;left:108"><nobr>VERTEX_LIGHTING_GROUP ARRAY (ngroups entries) </nobr></div>
+<div style="position:absolute;top:4495;left:108"><nobr>UINT8 cull type (0 - no cull, 1- (backface cull)</nobr></div>
+<div style="position:absolute;top:4535;left:108"><nobr>UINT16 0 - unused must be 0.</nobr></div>
+<div style="position:absolute;top:4555;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:4595;left:108"><nobr>VERTEX_LIGHTING_GROUP</nobr></div>
+<div style="position:absolute;top:4616;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:4636;left:108"><nobr>UINT16 num_faces (all faces are triangles)</nobr></div>
+<div style="position:absolute;top:4656;left:108"><nobr>IDENTIFIER lighting_material (0=default)</nobr></div>
+<div style="position:absolute;top:4676;left:108"><nobr>FACE ARRAY (num_faces entries)</nobr></div>
+<div style="position:absolute;top:4696;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:4737;left:108"><nobr>FACE_VERTEX</nobr></div>
+<div style="position:absolute;top:4757;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:4777;left:108"><nobr>UINT16 index into mesh vertex positions array</nobr></div>
+<div style="position:absolute;top:4797;left:108"><nobr>UINT16 index into mesh texture coordinate array </nobr></div>
+</span></font>
+
+<div style="position:absolute;top:4927;left:0"><hr><table width="100%" border="0"><tbody><tr><td bgcolor="eeeeee" align="right"><font face="arial,sans-serif"><a name="5"><b>Page 5</b></a></font></td></tr></tbody></table></div><font size="3" face="Times"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:5038;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:5078;left:108"><nobr>FACE</nobr></div>
+<div style="position:absolute;top:5099;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:5119;left:108"><nobr>FACE_VERTEX ARRAY(3) 3 entries describing a triangular face.</nobr></div>
+<div style="position:absolute;top:5139;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:5179;left:108"><nobr><b>Section 4 : Animation Channels (Defines transform animation)</b></nobr></div>
+<div style="position:absolute;top:5199;left:108"><nobr>============================================================</nobr></div>
+<div style="position:absolute;top:5240;left:108"><nobr>UINT16 count // Number of animation channels</nobr></div>
+<div style="position:absolute;top:5280;left:108"><nobr>ANIMATION_CHANNEL ARRAY(count) Array of animation channels.</nobr></div>
+<div style="position:absolute;top:5320;left:108"><nobr>ANIMATION_CHANNEL</nobr></div>
+<div style="position:absolute;top:5340;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:5360;left:108"><nobr>IDENTIFIER node : The node to which this animation channel refers.</nobr></div>
+<div style="position:absolute;top:5380;left:108"><nobr>UINT16 nkeyframes : The number of keyframes used by this channel.</nobr></div>
+<div style="position:absolute;top:5401;left:108"><nobr>FLOAT channel_period : The length of time one loop of this channel lasts.</nobr></div>
+<div style="position:absolute;top:5421;left:108"><nobr>UINT16 0 : Not currently used. Must be 0.</nobr></div>
+<div style="position:absolute;top:5441;left:108"><nobr>MATRIX34 ARRAY(nkeyframes) keyframe_data : The actual animation transforms, evenly spaced over</nobr></div>
+<div style="position:absolute;top:5461;left:108"><nobr>time 'channel_period'.</nobr></div>
+<div style="position:absolute;top:5481;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:5522;left:108"><nobr><b>Section 5 : Animation References (Defines texture animation)</b></nobr></div>
+<div style="position:absolute;top:5542;left:108"><nobr>============================================================</nobr></div>
+<div style="position:absolute;top:5582;left:108"><nobr>Animation references are a way of linking texture (flipbook) animations defined in the </nobr></div>
+<div style="position:absolute;top:5602;left:108"><nobr>.spr files to the geometry of a .SOD mesh node. An example of their usage is the</nobr></div>
+<div style="position:absolute;top:5622;left:108"><nobr>flipbook animation applied to the geometry for the various shield effects in Armada.</nobr></div>
+<div style="position:absolute;top:5683;left:108"><nobr>UINT16 num_animation_references</nobr></div>
+<div style="position:absolute;top:5723;left:108"><nobr>ANIMATION_REFERENCE ARRAY(num_animation_references)</nobr></div>
+<div style="position:absolute;top:5783;left:108"><nobr>ANIMATION_REFERENCE</nobr></div>
+<div style="position:absolute;top:5804;left:108"><nobr>{</nobr></div>
+<div style="position:absolute;top:5824;left:108"><nobr>UINT8 type : Must be 4</nobr></div>
+<div style="position:absolute;top:5844;left:108"><nobr>IDENTIFIER node : The node to which this animation applies.</nobr></div>
+<div style="position:absolute;top:5864;left:108"><nobr>IDENTIFIER anim : The animation (as defined in .spr files) that is to be applied to this node.</nobr></div>
+<div style="position:absolute;top:5884;left:108"><nobr>FLOAT playback_offset : Time offset in seconds to be applied to this animation reference.</nobr></div>
+<div style="position:absolute;top:5904;left:108"><nobr>}</nobr></div>
+<div style="position:absolute;top:5945;left:108"><nobr>Additional Information</nobr></div>
+<div style="position:absolute;top:5965;left:108"><nobr>====================== </nobr></div>
+</span></font>
+
+<div style="position:absolute;top:6115;left:0"><hr><table width="100%" border="0"><tbody><tr><td bgcolor="eeeeee" align="right"><font face="arial,sans-serif"><a name="6"><b>Page 6</b></a></font></td></tr></tbody></table></div><font size="3" face="Times"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:6226;left:108"><nobr>Vertex Lighting Material Sharing</nobr></div>
+<div style="position:absolute;top:6246;left:108"><nobr>================================</nobr></div>
+<div style="position:absolute;top:6287;left:108"><nobr>Vertex lighting materials are shared between objects, when parsing a .SOD file,</nobr></div>
+<div style="position:absolute;top:6307;left:108"><nobr>Storm3D searches for a match in all previously loaded files. If a match is found, that</nobr></div>
+<div style="position:absolute;top:6327;left:108"><nobr>material is used. This prevents artists from having to ensure the material characteristics</nobr></div>
+<div style="position:absolute;top:6347;left:108"><nobr>of commonly used materials are correct in each file, and also saves memory.</nobr></div>
+<div style="position:absolute;top:6387;left:108"><nobr>A 'palette' of commonly used materials can be found in materials.sod </nobr></div>
+<div style="position:absolute;top:6407;left:108"><nobr>In Armada, this file is loaded prior to most other SOD files &amp; so defines the</nobr></div>
+<div style="position:absolute;top:6428;left:108"><nobr>characteristics of many common materials.</nobr></div>
+<div style="position:absolute;top:6488;left:108"><nobr>Hierarchy Structure (Armada Specific)</nobr></div>
+<div style="position:absolute;top:6508;left:108"><nobr>=====================================</nobr></div>
+<div style="position:absolute;top:6528;left:108"><nobr>Armada uses various nodes in a Storm3D hierarchy for special purposes. </nobr></div>
+<div style="position:absolute;top:6548;left:108"><nobr>These include hardpoints, damage nodes, running lights, borgification. </nobr></div>
+<div style="position:absolute;top:6568;left:108"><nobr>When generating new artwork, the artist must pay careful attention to the </nobr></div>
+<div style="position:absolute;top:6589;left:108"><nobr>structure of the hierarchy for the new object to function correctly in Armada. </nobr></div>
+<div style="position:absolute;top:6609;left:108"><nobr>A definition of the hierarchy structure required by Armada is beyond the scope</nobr></div>
+<div style="position:absolute;top:6629;left:108"><nobr>of this document. For the time being, existing artwork can be used as a reference.</nobr></div>
+<div style="position:absolute;top:6689;left:108"><nobr>TEXTURE_MATERIAL Definition</nobr></div>
+<div style="position:absolute;top:6710;left:108"><nobr>===========================</nobr></div>
+<div style="position:absolute;top:6730;left:108"><nobr>A texture material defines the characteristics of the polygon rasterizer used to</nobr></div>
+<div style="position:absolute;top:6750;left:108"><nobr>render the polygons in a given mesh. The texture materials are currently fixed</nobr></div>
+<div style="position:absolute;top:6770;left:108"><nobr>and defined within the executable.</nobr></div>
+<div style="position:absolute;top:6810;left:108"><nobr>Useful values are : </nobr></div>
+<div style="position:absolute;top:6851;left:108"><nobr>default - Standard material</nobr></div>
+<div style="position:absolute;top:6871;left:108"><nobr>additive - Use additive blending</nobr></div>
+<div style="position:absolute;top:6891;left:108"><nobr>translucent - Semi transparent </nobr></div>
+<div style="position:absolute;top:6911;left:108"><nobr>alphathreshold - Use for objects using alpha channel 'cut outs' - alpha</nobr></div>
+<div style="position:absolute;top:6931;left:108"><nobr>channels will have hard edged 'threshold' but objects will be</nobr></div>
+<div style="position:absolute;top:6951;left:108"><nobr>drawn quickly.</nobr></div>
+<div style="position:absolute;top:6971;left:108"><nobr>alpha - Uses entire alpha channel. Object will require sorting, so</nobr></div>
+<div style="position:absolute;top:6992;left:108"><nobr>will have performance implications.</nobr></div>
+<div style="position:absolute;top:7012;left:108"><nobr>wireframe - Use wireframe graphics. </nobr></div>
+</span></font>
+
+
+</div></body></html>
